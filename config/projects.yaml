@@ -1,17 +1,24 @@
 version: 0.1
 
 projects:
-    - keywords:
-          - "ふくくるさんぽ"
-      scrapbox_project: "muselab"
+  - id: fukukuru-20260718
+    keywords:
+      - "ふくくるさんぽ"
+    scrapbox:
+      project: muselab
       page: "ふくくるさんぽ-26/7/18(土)"
 
-    - keywords:
-          - "一人合唱"
-      scrapbox_project: "muselab"
+  - id: solo-chorus
+    keywords:
+      - "一人合唱"
+      - "一人合唱インタフェース"
+    scrapbox:
+      project: muselab
       page: "一人合唱インタフェース"
 
-    - keywords:
-          - "SIGMUS147"
-      scrapbox_project: "muselab"
+  - id: sigmus147
+    keywords:
+      - "SIGMUS147"
+    scrapbox:
+      project: muselab
       page: "SIGMUS147"

@@ -17,6 +17,7 @@ Task / Log / Knowledge
 - Scrapbox Projectリンク生成
 - Google Calendar説明欄へProjectリンクを追記
 - Dry Run対応
+- projects.yaml はコードを書き換えずに運用ルールを変更するためのファイルである
 
 ## Future
 
