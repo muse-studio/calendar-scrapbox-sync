@@ -1,0 +1,6 @@
+目的
+命名規則
+Projectリンクの形式
+Scrapboxページ命名規則
+Google Calendar説明欄フォーマット
+コミット規約
