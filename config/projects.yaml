@@ -1,0 +1,17 @@
+version: 0.1
+
+projects:
+    - keywords:
+          - "ふくくるさんぽ"
+      scrapbox_project: "muselab"
+      page: "ふくくるさんぽ-26/7/18(土)"
+
+    - keywords:
+          - "一人合唱"
+      scrapbox_project: "muselab"
+      page: "一人合唱インタフェース"
+
+    - keywords:
+          - "SIGMUS147"
+      scrapbox_project: "muselab"
+      page: "SIGMUS147"
