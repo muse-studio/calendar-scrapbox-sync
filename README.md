@@ -17,7 +17,12 @@ Task / Log / Knowledge
 - Scrapbox Projectリンク生成
 - Google Calendar説明欄へProjectリンクを追記
 - Dry Run対応
-- projects.yaml はコードを書き換えずに運用ルールを変更するためのファイルである
+
+## Design Principles
+
+- projects.yaml により、コードを書き換えずに運用ルールを変更できる
+- 設定と実装を分離する
+- 小さく作り、段階的に機能を追加する
 
 ## Future
 
