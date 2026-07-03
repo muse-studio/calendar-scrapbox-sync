@@ -1,24 +1,51 @@
 version: 0.1
 
 projects:
-  - id: fukukuru-20260718
-    keywords:
-      - "ふくくるさんぽ"
-    scrapbox:
-      project: muselab
-      page: "ふくくるさんぽ-26/7/18(土)"
+    - id: fukukuru-20260718
 
-  - id: solo-chorus
-    keywords:
-      - "一人合唱"
-      - "一人合唱インタフェース"
-    scrapbox:
-      project: muselab
-      page: "一人合唱インタフェース"
+      title: "ふくくるさんぽ"
 
-  - id: sigmus147
-    keywords:
-      - "SIGMUS147"
-    scrapbox:
-      project: muselab
-      page: "SIGMUS147"
+      keywords:
+          - "ふくくるさんぽ"
+      aliases:
+          - "ふくくる"
+
+      category: event
+
+      scrapbox:
+          project: muselab
+          page: "ふくくるさんぽ-26/7/18(土)"
+      calendar:
+          enabled: true
+
+    - id: solo-chorus
+      title: "一人合唱"
+
+      keywords:
+          - "一人合唱"
+          - "一人合唱インタフェース"
+
+      category: research
+
+      scrapbox:
+          project: muselab
+          page: "一人合唱インタフェース"
+
+    - id: sigmus147
+
+      title: "SIGMUS147"
+
+      keywords:
+          - SIGMUS147
+
+      category: conference
+      status: active
+
+      scrapbox:
+          project: muselab
+          page: SIGMUS147
+      calendar:
+          enabled: true
+
+      github:
+          repo: muse-studio/calendar-scrapbox-sync

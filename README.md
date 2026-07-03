@@ -18,6 +18,21 @@ Task / Log / Knowledge
 - Google Calendar説明欄へProjectリンクを追記
 - Dry Run対応
 
+### Required
+
+id:
+title:
+keywords:
+scrapbox:
+
+### Optional
+
+aliases:
+category:
+status:
+calendar:
+github:
+
 ## Design Principles
 
 - projects.yaml により、コードを書き換えずに運用ルールを変更できる
