@@ -12,14 +12,34 @@ function listUpcomingEvents() {
 
     const events = calendar.getEvents(now, end);
 
-    Logger.log("=== Calendar Events ===");
+    Logger.log("=== DRY RUN ===");
     Logger.log("Count: " + events.length);
 
     events.forEach((event) => {
+        const title = event.getTitle();
+        const project = findProject(title);
+
         Logger.log("----------------------------------------");
-        Logger.log("Title : " + event.getTitle());
-        Logger.log("Start : " + event.getStartTime());
-        Logger.log("End   : " + event.getEndTime());
+        Logger.log("Title:");
+        Logger.log(title);
+        Logger.log("");
+
+        if (project) {
+            Logger.log("Matched:");
+            Logger.log(project.title);
+            Logger.log("");
+            Logger.log("URL:");
+            Logger.log(buildScrapboxUrl(project));
+            Logger.log("");
+            Logger.log("Action:");
+            Logger.log("Projectリンクを追加予定");
+        } else {
+            Logger.log("Matched:");
+            Logger.log("(none)");
+            Logger.log("");
+            Logger.log("Action:");
+            Logger.log("Skipped");
+        }
     });
 }
 
@@ -64,6 +84,6 @@ function buildScrapboxUrl(project) {
 function testBuildScrapboxUrl() {
     const project = PROJECTS[0];
 
-    Logger.log("Project : " + project.scrapbox.project);
+    Logger.log("Project : " + project.title);
     Logger.log("Generated URL : " + buildScrapboxUrl(project));
 }
