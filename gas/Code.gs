@@ -17,11 +17,17 @@ function listUpcomingEvents() {
 
     events.forEach((event) => {
         const title = event.getTitle();
+        const description = event.getDescription() || "";
         const project = findProject(title);
+        const url = project ? buildScrapboxUrl(project) : null;
+        const newDescription = url ? buildNewDescription(description, url) : description;
+        const shouldUpdate = newDescription !== description;
 
         Logger.log("----------------------------------------");
-        Logger.log("Title:");
-        Logger.log(title);
+        Logger.log("Title: " + title);
+        Logger.log("");
+        Logger.log("Current Description:");
+        Logger.log(description || "(empty)");
         Logger.log("");
 
         if (project) {
@@ -29,17 +35,18 @@ function listUpcomingEvents() {
             Logger.log(project.title);
             Logger.log("");
             Logger.log("URL:");
-            Logger.log(buildScrapboxUrl(project));
-            Logger.log("");
-            Logger.log("Action:");
-            Logger.log("Projectリンクを追加予定");
+            Logger.log(url);
         } else {
             Logger.log("Matched:");
             Logger.log("(none)");
-            Logger.log("");
-            Logger.log("Action:");
-            Logger.log("Skipped");
         }
+
+        Logger.log("");
+        Logger.log("New Description:");
+        Logger.log(newDescription || "(empty)");
+        Logger.log("");
+        Logger.log("Action:");
+        Logger.log(shouldUpdate ? "Would Update" : "No Change");
     });
 }
 
@@ -76,6 +83,21 @@ function testFindProject() {
  */
 function buildScrapboxUrl(project) {
     return "https://scrapbox.io/" + project.scrapbox.project + "/" + project.scrapbox.page;
+}
+
+/**
+ * Dry Run用に更新後のDescriptionを生成する
+ */
+function buildNewDescription(description, url) {
+    if (!description) {
+        return "■Project\n" + url;
+    }
+
+    if (description.includes(url)) {
+        return description;
+    }
+
+    return "■Project\n" + url + "\n\n" + description;
 }
 
 /**
