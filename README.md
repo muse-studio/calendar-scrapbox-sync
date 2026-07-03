@@ -18,6 +18,27 @@ Task / Log / Knowledge
 - Google Calendar説明欄へProjectリンクを追記
 - Dry Run対応
 
+### Required
+
+id:
+title:
+keywords:
+scrapbox:
+
+### Optional
+
+aliases:
+category:
+status:
+calendar:
+github:
+
+## Design Principles
+
+- projects.yaml により、コードを書き換えずに運用ルールを変更できる
+- 設定と実装を分離する
+- 小さく作り、段階的に機能を追加する
+
 ## Future
 
 - Scrapbox API連携
