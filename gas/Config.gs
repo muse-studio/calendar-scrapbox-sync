@@ -2,13 +2,19 @@
  * Version 0.1
  * config/projects.yaml をもとにした静的なProject設定
  */
- const CONFIG = {
+function getConfig() {
 
-    dryRun: true,
+  return {
 
-    lookAheadDays: 60
+    dryRun: false,
 
-};
+    lookAheadDays: 60,
+
+    maxUpdates: 999,
+
+  };
+
+}
 const PROJECTS = [
     {
         id: "yamaguchi-miyu",
@@ -55,7 +61,7 @@ const PROJECTS = [
         ],
         category: "research",
         scrapbox: {
-            project: "muselab",
+            project: "musestudio",
             page: "一人合唱インタフェース",
         },
     },
