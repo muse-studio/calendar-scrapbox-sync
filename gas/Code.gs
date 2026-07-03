@@ -28,7 +28,9 @@ function listUpcomingEvents() {
  */
 function findProject(title) {
     for (const project of PROJECTS) {
-        for (const keyword of project.keywords) {
+        const keywords = project.keywords ?? [];
+
+        for (const keyword of keywords) {
             if (title.includes(keyword)) {
                 return project;
             }
