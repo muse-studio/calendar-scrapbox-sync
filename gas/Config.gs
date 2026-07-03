@@ -54,3 +54,24 @@ const PROJECTS = [
         },
     },
 ];
+
+/**
+ * PROJECTS の内容をLoggerで確認する
+ */
+function testProjects() {
+    Logger.log("=== PROJECTS ===");
+    Logger.log("Count: " + PROJECTS.length);
+
+    PROJECTS.forEach((project) => {
+        Logger.log("----------------------------------------");
+        Logger.log("ID : " + project.id);
+        Logger.log("Title : " + project.title);
+        Logger.log("Keywords : " + project.keywords.join(", "));
+
+        if (project.aliases) {
+            Logger.log("Aliases : " + project.aliases.join(", "));
+        }
+
+        Logger.log("Scrapbox : https://scrapbox.io/" + project.scrapbox.project + "/" + project.scrapbox.page);
+    });
+}
