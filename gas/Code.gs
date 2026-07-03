@@ -55,7 +55,7 @@ function testFindProject() {
  * ProjectオブジェクトからScrapbox URLを生成する
  */
 function buildScrapboxUrl(project) {
-    return "https://scrapbox.io/" + project.title + "/" + project.scrapbox.page;
+    return "https://scrapbox.io/" + project.scrapbox.project + "/" + project.scrapbox.page;
 }
 
 /**
@@ -64,6 +64,6 @@ function buildScrapboxUrl(project) {
 function testBuildScrapboxUrl() {
     const project = PROJECTS[0];
 
-    Logger.log("Project : " + project.title);
+    Logger.log("Project : " + project.scrapbox.project);
     Logger.log("Generated URL : " + buildScrapboxUrl(project));
 }
