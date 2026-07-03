@@ -2,25 +2,30 @@
  * Version 0.1
  * Google Calendar から今後60日間の予定を取得してログに表示する
  */
+const DRY_RUN = CONFIG.dryRun;
+
 function listUpcomingEvents() {
     const calendar = CalendarApp.getDefaultCalendar();
 
     const now = new Date();
 
     const end = new Date(now);
-    end.setDate(end.getDate() + 60);
+    end.setDate(end.getDate() + CONFIG.lookAheadDays);
 
     const events = calendar.getEvents(now, end);
 
     Logger.log("=== DRY RUN ===");
     Logger.log("Count: " + events.length);
 
+    let updateCount = 0;
     events.forEach((event) => {
         const title = event.getTitle();
         const description = event.getDescription() || "";
         const project = findProject(title);
         const url = project ? buildScrapboxUrl(project) : null;
-        const newDescription = url ? buildNewDescription(description, url) : description;
+        const newDescription = url
+            ? buildNewDescription(description, url)
+            : description;
         const shouldUpdate = newDescription !== description;
 
         Logger.log("----------------------------------------");
@@ -46,8 +51,25 @@ function listUpcomingEvents() {
         Logger.log(newDescription || "(empty)");
         Logger.log("");
         Logger.log("Action:");
-        Logger.log(shouldUpdate ? "Would Update" : "No Change");
+
+        if (shouldUpdate) {
+            updateCount++;
+            if (DRY_RUN) {
+                Logger.log("Would Update");
+            } else {
+                event.setDescription(newDescription);
+                Logger.log("Updated");
+            }
+        } else {
+            Logger.log("No Change");
+        }
     });
+    Logger.log("----------------------------------------");
+    Logger.log("Summary");
+    Logger.log("Events : " + events.length);
+    Logger.log("Updates: " + updateCount);
+    Logger.log("DRY_RUN: " + DRY_RUN);
+    Logger.log("Look ahead days: " + CONFIG.lookAheadDays);
 }
 
 /**
@@ -82,7 +104,12 @@ function testFindProject() {
  * ProjectオブジェクトからScrapbox URLを生成する
  */
 function buildScrapboxUrl(project) {
-    return "https://scrapbox.io/" + project.scrapbox.project + "/" + project.scrapbox.page;
+    return (
+        "https://scrapbox.io/" +
+        project.scrapbox.project +
+        "/" +
+        project.scrapbox.page
+    );
 }
 
 /**

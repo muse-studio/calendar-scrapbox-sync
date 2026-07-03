@@ -2,7 +2,32 @@
  * Version 0.1
  * config/projects.yaml をもとにした静的なProject設定
  */
+ const CONFIG = {
+
+    dryRun: true,
+
+    lookAheadDays: 60
+
+};
 const PROJECTS = [
+    {
+        id: "yamaguchi-miyu",
+        title: "山口瑞悠",
+        keywords: [
+            "山口瑞悠","瑞悠","みゆう","miyu"
+        ],
+        aliases: [
+            "みゆう",
+        ],
+        category: "student",
+        scrapbox: {
+            project: "musestudio",
+            page: "山口瑞悠",
+        },
+        calendar: {
+            enabled: true,
+        },
+    },
     {
         id: "fukukuru-20260718",
         title: "ふくくるさんぽ",
