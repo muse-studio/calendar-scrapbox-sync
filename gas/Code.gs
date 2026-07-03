@@ -28,40 +28,11 @@ function listUpcomingEvents() {
             : description;
         const shouldUpdate = newDescription !== description;
 
-        Logger.log("----------------------------------------");
-        Logger.log("Title: " + title);
-        Logger.log("");
-        Logger.log("Current Description:");
-        Logger.log(description || "(empty)");
-        Logger.log("");
-
-        if (project) {
-            Logger.log("Matched:");
-            Logger.log(project.title);
-            Logger.log("");
-            Logger.log("URL:");
-            Logger.log(url);
-        } else {
-            Logger.log("Matched:");
-            Logger.log("(none)");
-        }
-
-        Logger.log("");
-        Logger.log("New Description:");
-        Logger.log(newDescription || "(empty)");
-        Logger.log("");
-        Logger.log("Action:");
+        logEvent(event, project, url, description, newDescription, shouldUpdate);
 
         if (shouldUpdate) {
             updateCount++;
-            if (DRY_RUN) {
-                Logger.log("Would Update");
-            } else {
-                event.setDescription(newDescription);
-                Logger.log("Updated");
-            }
-        } else {
-            Logger.log("No Change");
+            updateEventDescription(event, newDescription);
         }
     });
     Logger.log("----------------------------------------");
@@ -70,6 +41,59 @@ function listUpcomingEvents() {
     Logger.log("Updates: " + updateCount);
     Logger.log("DRY_RUN: " + DRY_RUN);
     Logger.log("Look ahead days: " + CONFIG.lookAheadDays);
+}
+
+/**
+ * イベントの処理結果をLoggerへ出力する
+ */
+function logEvent(event, project, url, description, newDescription, shouldUpdate) {
+    Logger.log("----------------------------------------");
+    Logger.log("Title: " + event.getTitle());
+    Logger.log("");
+    Logger.log("Current Description:");
+    Logger.log(description || "(empty)");
+    Logger.log("");
+
+    Logger.log("Matched:");
+    Logger.log(project ? project.title : "(none)");
+
+    if (project) {
+        Logger.log("");
+        Logger.log("URL:");
+        Logger.log(url);
+    }
+
+    Logger.log("");
+    Logger.log("New Description:");
+    Logger.log(newDescription || "(empty)");
+    Logger.log("");
+    Logger.log("Action:");
+
+    if (!shouldUpdate) {
+        Logger.log("No Change");
+    } else if (DRY_RUN) {
+        Logger.log("Would Update");
+    } else {
+        Logger.log("Updated");
+    }
+}
+
+/**
+ * イベント説明を更新する
+ */
+function updateEventDescription(event, newDescription) {
+    if (DRY_RUN) {
+        return;
+    }
+
+    event.setDescription(newDescription);
+}
+
+/**
+ * Projectセクションを生成する
+ */
+function buildProjectSection(url) {
+    return "■Project\n" + url;
 }
 
 /**
@@ -116,15 +140,17 @@ function buildScrapboxUrl(project) {
  * Dry Run用に更新後のDescriptionを生成する
  */
 function buildNewDescription(description, url) {
+    const projectSection = buildProjectSection(url);
+
     if (!description) {
-        return "■Project\n" + url;
+        return projectSection;
     }
 
     if (description.includes(url)) {
         return description;
     }
 
-    return "■Project\n" + url + "\n\n" + description;
+    return projectSection + "\n\n" + description;
 }
 
 /**
