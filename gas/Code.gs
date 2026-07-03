@@ -2,7 +2,7 @@
  * Version 0.1
  * Google Calendar から今後60日間の予定を取得してログに表示する
  */
-const DRY_RUN = CONFIG.dryRun;
+const config = getConfig();
 
 function listUpcomingEvents() {
     const calendar = CalendarApp.getDefaultCalendar();
@@ -10,7 +10,7 @@ function listUpcomingEvents() {
     const now = new Date();
 
     const end = new Date(now);
-    end.setDate(end.getDate() + CONFIG.lookAheadDays);
+    end.setDate(end.getDate() + config.lookAheadDays);
 
     const events = calendar.getEvents(now, end);
 
@@ -30,7 +30,7 @@ function listUpcomingEvents() {
 
         logEvent(event, project, url, description, newDescription, shouldUpdate);
 
-        if (shouldUpdate) {
+        if (shouldUpdate && updateCount < config.maxUpdates) {
             updateCount++;
             updateEventDescription(event, newDescription);
         }
@@ -39,8 +39,8 @@ function listUpcomingEvents() {
     Logger.log("Summary");
     Logger.log("Events : " + events.length);
     Logger.log("Updates: " + updateCount);
-    Logger.log("DRY_RUN: " + DRY_RUN);
-    Logger.log("Look ahead days: " + CONFIG.lookAheadDays);
+    Logger.log("config.dryRun: " + config.dryRun);
+    Logger.log("Look ahead days: " + config.lookAheadDays);
 }
 
 /**
@@ -71,7 +71,7 @@ function logEvent(event, project, url, description, newDescription, shouldUpdate
 
     if (!shouldUpdate) {
         Logger.log("No Change");
-    } else if (DRY_RUN) {
+    } else if (config.dryRun) {
         Logger.log("Would Update");
     } else {
         Logger.log("Updated");
@@ -82,7 +82,7 @@ function logEvent(event, project, url, description, newDescription, shouldUpdate
  * イベント説明を更新する
  */
 function updateEventDescription(event, newDescription) {
-    if (DRY_RUN) {
+    if (config.dryRun) {
         return;
     }
 
