@@ -50,3 +50,20 @@ function testFindProject() {
     Logger.log("Title : " + title);
     Logger.log("Matched : " + (project ? project.title : "(none)"));
 }
+
+/**
+ * ProjectオブジェクトからScrapbox URLを生成する
+ */
+function buildScrapboxUrl(project) {
+    return "https://scrapbox.io/" + project.scrapbox.project + "/" + project.scrapbox.page;
+}
+
+/**
+ * buildScrapboxUrl の動作をLoggerで確認する
+ */
+function testBuildScrapboxUrl() {
+    const project = PROJECTS[0];
+
+    Logger.log("Project : " + project.scrapbox.project);
+    Logger.log("Generated URL : " + buildScrapboxUrl(project));
+}
