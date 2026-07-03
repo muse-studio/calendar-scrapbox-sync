@@ -20,5 +20,36 @@ function listUpcomingEvents() {
         Logger.log("Title : " + event.getTitle());
         Logger.log("Start : " + event.getStartTime());
         Logger.log("End   : " + event.getEndTime());
+
+        const project = findProject(event.getTitle());
+
+        if (project) {
+            Logger.log("Matched : " + project.title);
+            Logger.log("URL : " + buildScrapboxUrl(project));
+        } else {
+            Logger.log("Matched : (none)");
+        }
     });
+}
+
+/**
+ * イベントタイトルに一致するProjectを検索する
+ */
+function findProject(title) {
+    return PROJECTS.find((project) => {
+        const terms = [
+            project.title,
+            ...project.keywords,
+            ...(project.aliases || []),
+        ];
+
+        return terms.some((term) => title.includes(term));
+    });
+}
+
+/**
+ * Scrapbox ProjectページのURLを生成する
+ */
+function buildScrapboxUrl(project) {
+    return "https://scrapbox.io/" + project.scrapbox.project + "/" + project.scrapbox.page;
 }
