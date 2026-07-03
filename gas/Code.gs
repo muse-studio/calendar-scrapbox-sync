@@ -20,15 +20,6 @@ function listUpcomingEvents() {
         Logger.log("Title : " + event.getTitle());
         Logger.log("Start : " + event.getStartTime());
         Logger.log("End   : " + event.getEndTime());
-
-        const project = findProject(event.getTitle());
-
-        if (project) {
-            Logger.log("Matched : " + project.title);
-            Logger.log("URL : " + buildScrapboxUrl(project));
-        } else {
-            Logger.log("Matched : (none)");
-        }
     });
 }
 
@@ -36,20 +27,24 @@ function listUpcomingEvents() {
  * イベントタイトルに一致するProjectを検索する
  */
 function findProject(title) {
-    return PROJECTS.find((project) => {
-        const terms = [
-            project.title,
-            ...project.keywords,
-            ...(project.aliases || []),
-        ];
+    for (const project of PROJECTS) {
+        for (const keyword of project.keywords) {
+            if (title.includes(keyword)) {
+                return project;
+            }
+        }
+    }
 
-        return terms.some((term) => title.includes(term));
-    });
+    return null;
 }
 
 /**
- * Scrapbox ProjectページのURLを生成する
+ * findProject の動作をLoggerで確認する
  */
-function buildScrapboxUrl(project) {
-    return "https://scrapbox.io/" + project.scrapbox.project + "/" + project.scrapbox.page;
+function testFindProject() {
+    const title = "ふくくるさんぽ（編曲演奏・リズムパフォーマンス）";
+    const project = findProject(title);
+
+    Logger.log("Title : " + title);
+    Logger.log("Matched : " + (project ? project.title : "(none)"));
 }
